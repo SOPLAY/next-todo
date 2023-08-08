@@ -35,3 +35,20 @@
 //     }
 //   }
 // }
+
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      /**
+       * Custom command to select DOM element by data-cy attribute.
+       * @example cy.dataCy('greeting')
+       */
+      // @ts-ignore
+      dataCy(value: string): Chainable<JQuery<HTMLElement>>;
+    }
+  }
+}
+
+Cypress.Commands.add("dataCy", (v) => cy.get(`[data-cy=${v}]`));
+
+export {};

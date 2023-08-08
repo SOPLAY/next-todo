@@ -32,30 +32,65 @@ yarn migrate
 yarn dev
 ```
 
+## 테스트 실행 방법
+
+### headless의 경우
+
+- 개발 서버가 실행되어 있는 경우
+
+```shell
+yarn test:headless
+```
+
+- 개발 서버가 실행되어 있지 않은경우
+
+```shell
+yarn e2e:headless
+```
+
+### GUI의 경우
+
+> 다음에 있는 커맨드를 실행한 후 크롬을 선택후 start e2e test... 를 클릭합니다.  
+> 이후 실행된 창에서 todo.cy.ts 를 클릭하시면 작성한 페이지에 대한 테스트가 진행됩니다.  
+> 만약 api를 확인하고 싶으시다면 /api/todoAPI.cy.ts를 클릭하시면 됩니다.
+
+- 개발 서버가 실행되어 있는 경우
+
+```shell
+yarn test:gui
+```
+
+- 개발 서버가 실행되어 있지 않은경우
+
+```shell
+yarn e2e
+```
+
 ## 요구사항
 
 1. `/` 루트 경로 요구사항
-   - [ ] todo List를 추가 할 수 있는 input이 있어야 합니다.
+   - [ ] todo List를 추가 할 수 있는 input이 있어야 합니다. (`data-cy="todo-input"`을 주셔야 합니다.)
      - [ ] input에서 입력 도중 `"Enter"`를 입력할 경우 입력중이던 내용을 투두에 추가합니다. ( 추가시 input은 공백으로 변해야 합니다.)
-   - [ ] todo List를 확인 할 수 있습니다
-     - [ ] 각각의 todo 는 title 만 표시되어야 합니다.
+     - [ ] input에서 입력된 값을 버튼으로 추가 할 수 있어야 합니다. (`data-cy="todo-add-button"`을 주셔야 합니다.)
+   - [ ] todo List를 확인 할 수 있습니다. ( `data-cy="todo-list"`를 주셔야 합니다.)
+     - [ ] 각각의 todo 는 `data-cy="todo-item"`를 주셔야 합니다.
+     - [ ] 각각의 todo 는 title 만 표시되어야 합니다. ( 해당 타이틀은 `data-cy="todo-title"`를 주셔야 합니다.)
      - [ ] 각각의 todo 는 title 영역을 클릭할 시 `"/todo/고유id"` 경로로 이동됩니다.
      - [ ] 각각의 todo 는 완료 여부를 확인할 수 있어야 합니다.
-     - [ ] 각각의 todo 는 수정 할 수 있어야 합니다.
-       - [ ] 수정 모드 진입시 이를 취소해서 원상태로 돌아갈 수 있어야 합니다.
-       - [ ] 완료 상태의 경우 내용 수정과 별도로 수정할 수 있어야 합니다.
-     - [ ] 각각의 todo 는 삭제 할 수 있어야 합니다.
-     - [ ] 완료된 todo들을 일괄 삭제 할 수 있습니다.
+     - [ ] 각각의 todo 는 수정 할 수 있어야 합니다. ( 해당 수정 버튼은 `data-cy="todo-edit-button"`를 주셔야 합니다.)
+       - [ ] 수정 모드 진입시 이를 취소해서 원상태로 돌아갈 수 있어야 합니다. ( 해당 버튼에 `data-cy="todo-edit-button"`을 주셔야 합니다.)
+       - [ ] 완료 상태의 경우 내용 수정과 별도로 수정할 수 있어야 합니다. ( 해당 버튼에 `data-cy="submit"`을 주셔야 합니다.)
+     - [ ] 각각의 todo 는 삭제 할 수 있어야 합니다. ( 해당 버튼에 `data-cy="todo-delete-button"`를 주셔야 합니다.)
+       - [ ] 해당 작업을 진행할 때 취소와 확인 을 받아야 합니다. ( 각각 `data-cy="delete-no"`,`data-cy="delete-ok"`를 주셔야 합니다.)
 2. `/todo/[todoId]` ( Next.js의 페이징을 이해하셨나 테스트 하기 위한 테스트 이므로 ui는 간단하게 넘어가시면 됩니다.)
-   - [ ] 해당 todoId의 todo에 대한 title 과 description을 확인 할 수 있습니다.
-   - [ ] 수정 버튼을 클릭시 `"/todo/[todoId]/edit"` 경로로 이동 됩니다.
-   - [ ] 삭제 버튼 클릭시 삭제가 됩니다
-     - [ ] 만약 삭제를 할 경우 `/` 경로로 이동 됩니다.
-3. `/todo/[todoId]/edit` ( Next.js의 페이징을 이해하셨나 테스트 하기 위한 테스트 이므로 ui는 간단하게 넘어가시면 됩니다.)
-   - [ ] 제목, 설명, 완료 여부를 수정 할 수 있어야 합니다.
-   - [ ] edit 모드를 취소 하거나 수정 할 경우 `todo/[todoId]`로 다시 돌아갑니다.
-   - [ ] 삭제 버튼 클릭시 삭제가 됩니다
-     - [ ] 만약 삭제를 할 경우 `/` 경로로 이동 됩니다.
+   - [ ] 해당 todoId의 todo에 대한 title을 확인 할 수 있습니다.
+   - [ ] 뒤로가기 버튼이 존재하며 이 버튼에는 `data-cy="back"` 을 주셔야 합니다.
+
+> data-cy="back" 주입 방법
+
+```html
+<div data-cy="back">뒤로가기 버튼</div>
+```
 
 ## API 정의
 
